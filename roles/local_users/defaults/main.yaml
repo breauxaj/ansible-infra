@@ -1,0 +1,4 @@
+users:
+  - name: someuser
+    ssh_key: "ssh-ed25519 AAAAC3NzaC1l..."
+    shell: /bin/bash
