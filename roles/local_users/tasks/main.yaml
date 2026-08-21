@@ -1,0 +1,34 @@
+---
+- name: Ensure user accounts exist
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    shell: "{{ item.shell }}"
+    groups: sudo
+    append: true
+    create_home: true
+  loop: "{{ local_users_users }}"
+
+- name: Ensure .ssh directory exists
+  ansible.builtin.file:
+    path: "/home/{{ item.name }}/.ssh"
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: '0700'
+  loop: "{{ local_users_users }}"
+
+- name: Set authorized SSH key
+  ansible.posix.authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: "{{ item.ssh_key }}"
+  loop: "{{ local_users_users }}"
+
+- name: Grant passwordless sudo access
+  ansible.builtin.lineinfile:
+    path: "/etc/sudoers.d/{{ item.name }}"
+    create: true
+    state: present
+    mode: '0440'
+    line: "{{ item.name }} ALL=(ALL) NOPASSWD: ALL"
+  loop: "{{ local_users_users }}"

@@ -1,0 +1,4 @@
+---
+- name: Example RedHat-family task
+  ansible.builtin.debug:
+    msg: Placeholder for RedHat-based system tasks

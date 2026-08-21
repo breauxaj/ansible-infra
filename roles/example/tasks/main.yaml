@@ -1,0 +1,8 @@
+---
+- name: Include tasks for Debian-based systems
+  ansible.builtin.include_tasks: debian.yaml
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Include tasks for RedHat-based systems
+  ansible.builtin.include_tasks: redhat.yaml
+  when: ansible_facts['os_family'] == "RedHat"
