@@ -1,0 +1,4 @@
+---
+- name: Example Debian-family task
+  ansible.builtin.debug:
+    msg: Placeholder for Debian-based system tasks
